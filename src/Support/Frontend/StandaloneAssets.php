@@ -1,0 +1,124 @@
+<?php
+declare(strict_types=1);
+
+namespace Lattice\Support\Frontend;
+
+use Composer\InstalledVersions;
+use Illuminate\Support\Facades\File;
+use Lattice\Theme\ThemeRenderer;
+use RuntimeException;
+
+final class StandaloneAssets
+{
+    /** @var array{version: string, files: array<string, string>, plugins?: list<string>}|null */
+    private ?array $manifest = null;
+
+    public function __construct(
+        private readonly ThemeRenderer $themeRenderer,
+        private readonly ?string $installedVersion = null,
+    ) {}
+
+    /** @param array<string, mixed> $config */
+    public function head(array $config = []): string
+    {
+        $frontend = array_merge(config('lattice.frontend'), $config);
+
+        $tags = [sprintf('<link rel="stylesheet" href="%s">', $this->versionedUrl('lattice.css'))];
+
+        $theme = $this->themeRenderer->style();
+
+        if ($theme !== '') {
+            $tags[] = $theme;
+        }
+
+        $tags[] = $this->importMap();
+        $tags[] = $this->configScript($frontend);
+
+        return implode("\n", $tags);
+    }
+
+    public function scripts(): string
+    {
+        return sprintf('<script type="module" src="%s"></script>', $this->versionedUrl('lattice.js'));
+    }
+
+    private function importMap(): string
+    {
+        $imports = [
+            '@lattice-php/lattice/runtime' => $this->versionedUrl('runtime.js'),
+            'react' => $this->versionedUrl('react.js'),
+            'react/jsx-runtime' => $this->versionedUrl('jsx-runtime.js'),
+        ];
+
+        return sprintf(
+            '<script type="importmap">%s</script>',
+            json_encode(['imports' => $imports], JSON_THROW_ON_ERROR | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES),
+        );
+    }
+
+    /** @param array<string, mixed> $frontend */
+    private function configScript(array $frontend): string
+    {
+        $configuredPlugins = array_values(array_filter((array) ($frontend['plugins'] ?? []), is_string(...)));
+        $publishedPlugins = array_map(
+            $this->versionedUrl(...),
+            array_values(array_filter((array) ($this->manifest()['plugins'] ?? []), is_string(...))),
+        );
+        $plugins = array_values(array_unique([...$publishedPlugins, ...$configuredPlugins]));
+        $config = array_filter([
+            'spriteUrl' => $this->versionedUrl('sprite.svg'),
+            'refreshRefUrl' => route('lattice.refs.refresh', absolute: false),
+            'echo' => $frontend['echo'] ?? null,
+            'plugins' => $plugins !== [] ? $plugins : null,
+        ], static fn (mixed $value): bool => $value !== null);
+
+        return sprintf(
+            '<script type="application/json" data-lattice-config>%s</script>',
+            json_encode($config, JSON_THROW_ON_ERROR | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_SLASHES),
+        );
+    }
+
+    private function versionedUrl(string $file): string
+    {
+        $manifest = $this->manifest();
+
+        return asset(config('lattice.frontend.path').'/'.$file).'?v='.($manifest['files'][$file] ?? $manifest['version']);
+    }
+
+    /** @return array{version: string, files: array<string, string>, plugins?: list<string>} */
+    private function manifest(): array
+    {
+        if ($this->manifest !== null) {
+            return $this->manifest;
+        }
+
+        $path = public_path(config('lattice.frontend.path').'/manifest.json');
+
+        if (! File::exists($path)) {
+            throw new RuntimeException('Lattice standalone assets are not published. Run `php artisan lattice:assets`.');
+        }
+
+        $manifest = json_decode(File::get($path), true, flags: JSON_THROW_ON_ERROR);
+
+        $this->guardVersion($manifest['version']);
+
+        return $this->manifest = $manifest;
+    }
+
+    private function guardVersion(string $published): void
+    {
+        if (config('app.debug') !== true) {
+            return;
+        }
+
+        $installed = $this->installedVersion ?? (InstalledVersions::isInstalled('lattice-php/lattice')
+            ? InstalledVersions::getPrettyVersion('lattice-php/lattice')
+            : null);
+
+        if ($installed !== null && preg_match('/^\d+\.\d+\.\d+$/', $installed) === 1 && $installed !== $published) {
+            throw new RuntimeException(
+                "The published Lattice assets ({$published}) do not match the installed package ({$installed}). Run `php artisan lattice:assets`.",
+            );
+        }
+    }
+}

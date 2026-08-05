@@ -1,0 +1,1 @@
+export { remoteComponents } from "./plugin";

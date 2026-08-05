@@ -1,0 +1,17 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Http\Request;
+use Lattice\Core\Attributes\AsLayout;
+use Lattice\Core\PageSchema;
+use Lattice\Layouts\LayoutDefinition;
+
+#[AsLayout('{{ key }}')]
+class {{ class }} extends LayoutDefinition
+{
+    public function schema(PageSchema $schema, Request $request): PageSchema
+    {
+        return $schema;
+    }
+}

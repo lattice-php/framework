@@ -1,0 +1,77 @@
+<?php
+declare(strict_types=1);
+
+return [
+    'loading' => 'Zeilen werden geladen...',
+    'empty' => 'Keine Ergebnisse',
+    'actions' => 'Aktionen',
+    'sort' => [
+        'column' => ':label sortieren',
+        'clear' => 'Sortierung :label entfernen',
+    ],
+    'pagination' => [
+        'all-loaded' => 'Alle Zeilen geladen',
+        'page' => 'Seite :page',
+        'showing' => 'Zeige :from–:to von :total',
+        'load-more' => 'Mehr laden',
+        'loading' => 'Lädt...',
+        'previous' => 'Zurück',
+        'next' => 'Weiter',
+        'per-page' => 'Zeilen pro Seite',
+        'infinite' => 'Unendlich',
+    ],
+    'bulk' => [
+        'selected' => ':count ausgewählt',
+        'all-selected' => 'Alle :count ausgewählt',
+        'select-all-matching' => 'Alle :total passenden auswählen',
+    ],
+    'row-actions' => [
+        'duplicate' => 'Duplizieren',
+        'remove' => 'Entfernen',
+    ],
+    'columns' => [
+        'label' => 'Spalten',
+        'reset' => 'Zurücksetzen',
+    ],
+    'search' => [
+        'placeholder' => 'Suchen',
+        'clear' => 'Suche löschen',
+    ],
+    'row-detail' => [
+        'toggle' => 'Details ein-/ausklappen',
+    ],
+    'filter' => [
+        'all' => 'Alle',
+        'true' => 'Ja',
+        'false' => 'Nein',
+        'filter-by' => ':label filtern',
+        'clear' => ':label-Filter löschen',
+        'column-filters' => ':label-Filter',
+        'operator' => ':label-Operator',
+        'remove' => ':label-Filter entfernen',
+        'value' => ':label-Filterwert',
+        'add' => 'Filter hinzufügen',
+        'filters' => 'Filter',
+        'reset-all' => 'Alle zurücksetzen',
+    ],
+    'operators' => [
+        'contains' => 'enthält',
+        'starts_with' => 'beginnt mit',
+        'ends_with' => 'endet mit',
+        'eq' => 'ist gleich',
+        'neq' => 'ist ungleich',
+        'gt' => '>',
+        'gte' => '≥',
+        'lt' => '<',
+        'lte' => '≤',
+        'in' => 'in',
+        'not_in' => 'nicht in',
+        'before' => 'vor',
+        'after' => 'nach',
+        'empty' => 'ist leer',
+        'filled' => 'ist nicht leer',
+    ],
+    'select-row' => 'Zeile :key auswählen',
+    'select-all-rows' => 'Alle Zeilen auswählen',
+    'reset-column-widths' => 'Spaltenbreiten zurücksetzen',
+];

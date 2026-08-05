@@ -1,0 +1,17 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Http\Request;
+use Lattice\Core\Attributes\AsPage;
+use Lattice\Core\PageSchema;
+use Lattice\Http\Page;
+
+#[AsPage(route: '{{ key }}', name: '{{ key }}')]
+class {{ class }} extends Page
+{
+    public function render(PageSchema $schema, Request $request): PageSchema
+    {
+        return $schema;
+    }
+}

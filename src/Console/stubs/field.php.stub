@@ -1,0 +1,12 @@
+<?php
+
+namespace {{ namespace }};
+
+use Lattice\Form\Attributes\AsField;
+use Lattice\Form\Components\Field;
+
+#[AsField(type: '{{ type }}')]
+class {{ class }} extends Field
+{
+    //
+}

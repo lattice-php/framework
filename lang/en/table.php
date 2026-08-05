@@ -1,0 +1,77 @@
+<?php
+declare(strict_types=1);
+
+return [
+    'loading' => 'Loading rows...',
+    'empty' => 'No results',
+    'actions' => 'Actions',
+    'sort' => [
+        'column' => 'Sort :label',
+        'clear' => 'Clear :label sort',
+    ],
+    'pagination' => [
+        'all-loaded' => 'All rows loaded',
+        'page' => 'Page :page',
+        'showing' => 'Showing :from-:to of :total',
+        'load-more' => 'Load more',
+        'loading' => 'Loading...',
+        'previous' => 'Previous',
+        'next' => 'Next',
+        'per-page' => 'Rows per page',
+        'infinite' => 'Infinite',
+    ],
+    'bulk' => [
+        'selected' => ':count selected',
+        'all-selected' => 'All :count selected',
+        'select-all-matching' => 'Select all :total matching',
+    ],
+    'row-actions' => [
+        'duplicate' => 'Duplicate',
+        'remove' => 'Remove',
+    ],
+    'columns' => [
+        'label' => 'Columns',
+        'reset' => 'Reset',
+    ],
+    'search' => [
+        'placeholder' => 'Search',
+        'clear' => 'Clear search',
+    ],
+    'row-detail' => [
+        'toggle' => 'Toggle detail',
+    ],
+    'filter' => [
+        'all' => 'All',
+        'true' => 'True',
+        'false' => 'False',
+        'filter-by' => 'Filter :label',
+        'clear' => 'Clear :label filter',
+        'column-filters' => ':label filters',
+        'operator' => ':label operator',
+        'remove' => 'Remove :label filter',
+        'value' => ':label filter value',
+        'add' => 'Add filter',
+        'filters' => 'Filters',
+        'reset-all' => 'Reset all',
+    ],
+    'operators' => [
+        'contains' => 'contains',
+        'starts_with' => 'starts with',
+        'ends_with' => 'ends with',
+        'eq' => 'equals',
+        'neq' => 'not equals',
+        'gt' => '>',
+        'gte' => '≥',
+        'lt' => '<',
+        'lte' => '≤',
+        'in' => 'in',
+        'not_in' => 'not in',
+        'before' => 'before',
+        'after' => 'after',
+        'empty' => 'is empty',
+        'filled' => 'is not empty',
+    ],
+    'select-row' => 'Select row :key',
+    'select-all-rows' => 'Select all rows',
+    'reset-column-widths' => 'Reset column widths',
+];

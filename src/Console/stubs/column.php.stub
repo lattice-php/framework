@@ -1,0 +1,14 @@
+<?php
+
+namespace {{ namespace }};
+
+use Lattice\Table\Attributes\AsColumn;
+use Lattice\Table\Columns\Column;
+
+#[AsColumn(type: '{{ type }}')]
+class {{ class }} extends Column
+{
+    // Add public properties here; they are reflected into the column's
+    // TypeScript props and passed to the cell renderer. Keep internal state
+    // (filter flags, helpers) protected so it stays off the wire.
+}

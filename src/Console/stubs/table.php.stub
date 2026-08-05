@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Builder;
+use Lattice\Table\Attributes\AsTable;
+use Lattice\Table\Columns\Column;
+use Lattice\Table\Columns\TextColumn;
+use Lattice\Table\Sources\Eloquent\EloquentTableDefinition;
+use Lattice\Table\TableQuery;
+
+#[AsTable('{{ key }}')]
+class {{ class }} extends EloquentTableDefinition
+{
+    /**
+     * @return array<int, Column>
+     */
+    public function columns(): array
+    {
+        return [
+            TextColumn::make('id')->label('ID'),
+        ];
+    }
+
+    public function builder(TableQuery $query): Builder
+    {
+        // TODO: return the Eloquent query for this table, e.g. \App\Models\Example::query();
+        throw new \RuntimeException('Implement builder() for {{ class }}.');
+    }
+}
